@@ -1,0 +1,23 @@
+from fastapi import FastAPI 
+from . import models
+from .database import engine 
+from .routers import users, blog, authentication
+ 
+
+app = FastAPI()
+
+models.Base.metadata.create_all(bind=engine)
+
+app.include_router(authentication.router)
+app.include_router(blog.router)
+app.include_router(users.router)
+
+@app.get("/")
+def index():
+    return "Hello!!"
+
+     
+   
+ 
+    
+
